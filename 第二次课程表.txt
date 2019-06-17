@@ -1,0 +1,131 @@
+<html>
+<head>
+  <style>
+  td {
+    height: 5em;
+    width: 10em;
+    text-align: center;line-height:3em;
+    box-shadow: 3px 3px 2px 2px #e3e5e5;
+  }
+
+  td:hover {
+    position: relative;
+    top:-2px;
+    left: 2px;
+
+  }
+
+  .cell {
+    height: 5em;
+    width: 10em;
+  }
+
+  .cell > .detail {
+    display: none;
+  }
+
+  .cell > .detail.open {
+    display: block;
+    position: absolute;
+    height: 5em;
+    width: 10em;
+    background-color:669966;line-height:1em;
+  }
+
+  </style>
+</head>
+<body>
+  <table id="grid">
+  </table>
+
+  <script>
+  
+      let courses=new Array(
+      " ", "星期一", "星期二", "星期三", "星期四", "星期五",
+      "第一节","web应用开发技术","大学英语四级","管理信息系统","数据库原理及应用","大学英语四级",
+      "第二节","毛泽东思想与中国特色社会主义理论体系概论","管理科学基础","毛泽东思想与中国特色社会主义理论体系概论","管理科学基础","运营管理",
+      " "," "," "," "," "," ",
+      "第三节","管理信息系统","形势与政策","会计学","体育","毛泽东思想与中国特色社会主义理论体系概论",
+      "第四节","电子商务","数据库原理及应用"," ","会计学"," ")
+      
+      let details=new Array(
+      " ", " ", " ", " ", " ", " ",
+
+      "第一节<br/>(8:20-10:00)", 
+      "第一公共教学楼C411，<br/>1~15周，<br/>授课老师：吕成功", 
+      "第一公共教学楼C221，<br/>1~17周，<br/>授课老师：张蔚",
+      "第一公共教学楼C105，<br/>1~15周,单周，<br/>授课老师：刘烨", 
+      "第一公共教学楼B405，<br/>2~14周，<br/>授课老师：吴君",
+      "外国语学院219,<br/>2~16周,单周，<br/>第一公共教学楼C219，<br/>2~16周,双周<br/>，授课老师：张蔚", 
+
+      "第二节<br/>(10:20-12:00)", 
+      "第一公共教学楼A120，<br/>1~16周，<br/>授课老师：顾洪英",
+      "第一公共教学楼C411，<br/>3~17周，<br/>授课老师：赵方方", 
+      "第一公共教学楼A120，<br/> 1~16周，<br/>授课老师：顾洪英", 
+      "第一公共教学楼C411，<br/>3~17周，<br/>授课老师：赵方方", 
+      "第一公共教学楼B405，<br/>1~15周，<br/>授课老师：刘亮、邓华", 
+      " "," "," "," "," "," ",
+      "第三节<br/>(14:00-15:40)", 
+      "第一公共教学楼C105，<br/>1~15周,单周，<br/>授课老师：刘烨",
+      "第一公共教学楼C123，<br/>5~7周，<br/>授课老师：李坤",
+      "第一公共教学楼B101，<br/>1~17周,单周，<br/>授课老师：刘晓晖", 
+      "体育馆,<br/>1~15周,<br/>授课老师：薛松", 
+      "第一公共教学楼A120，<br/> 1~16周，<br/>授课老师：顾洪英", 
+
+      "第四节<br/>(16:00-17:40)",
+      "第一公共教学楼B303，<br/>3~17周，<br/>授课老师：张亮",
+      "第一公共教学楼C109，<br/>2~14周<br/>，授课老师：吴君",
+      "NULL",
+      "第一公共教学楼B101，<br/>1~17周，<br/>授课老师：刘晓晖",
+      "NULL",);
+    
+    let tblEl = document.getElementById('grid')
+    for (let i = 0; i < 6; i++) {
+      let trEl = document.createElement('tr');
+      for (let j = 0; j < 6; j++) {
+        let tdEl = document.createElement('td');
+        let divEl = document.createElement('div')
+        divEl.className = 'cell';
+        
+        let detailDivEl = document.createElement('div');
+        detailDivEl.className = 'detail';
+        detailDivEl.innerHTML = details[i*6+j];
+        detailDivEl.onmouseout =function(event) {
+          let names = detailDivEl.className.split(' ');
+          names = names.filter((x) => x != 'open')
+          detailDivEl.className = names.join(' ');
+        }
+        divEl.append(detailDivEl);
+
+        let briefDivEl = document.createElement('div');
+        briefDivEl.innerHTML = courses[i*6+j];
+        divEl.append(briefDivEl);
+
+
+
+        tdEl.onclick = function(event) {
+          let names = detailDivEl.className.split(' ');
+
+          if (names.indexOf('open') >= 0) {
+            names = names.filter((x) => x != 'open')
+          } else {
+            names.push('open');
+          }
+
+          console.log(names);
+
+          detailDivEl.className = names.join(' ');
+
+
+        };
+
+        tdEl.append(divEl);
+        trEl.append(tdEl);
+      }
+      tblEl.append(trEl);
+    }
+
+  </script>
+</body>
+
+</html>
